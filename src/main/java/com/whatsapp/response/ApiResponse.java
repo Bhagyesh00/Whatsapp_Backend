@@ -6,7 +6,6 @@ public class ApiResponse {
 	private boolean status;
 	
 	public ApiResponse(String message, boolean status) {
-		super();
 		this.message = message;
 		this.status = status;
 	}

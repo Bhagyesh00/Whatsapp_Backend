@@ -22,12 +22,11 @@ import com.whatsapp.response.AuthResponse;
 import com.whatsapp.service.CustomUserService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("auth")
 public class AuthController {
 	
 	private UserRepository userRepository;
 	private PasswordEncoder passwordEncoder;
-	private TokenProvider tokenProvider;
 	private CustomUserService customUserService;
 	
 	public AuthController(UserRepository userRepository,PasswordEncoder passwordEncoder,CustomUserService customUserService) {
@@ -38,8 +37,9 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) throws UserException{
-		String email = user.getEmail();
+
 		String full_name = user.getFull_name();
+		String email = user.getEmail();
 		String password = user.getPassword();
 		
 		User isUser = userRepository.findByEmail(email);
@@ -47,16 +47,17 @@ public class AuthController {
 			throw new UserException("Email is used with another account "+email);
 		}
 		User createdUser = new User();
-		createdUser.setEmail(email);
+
 		createdUser.setFull_name(full_name);
+		createdUser.setEmail(email);
 		createdUser.setPassword(passwordEncoder.encode(password));
 		
 		userRepository.save(createdUser);
 		
 		Authentication authentication = new UsernamePasswordAuthenticationToken(email,password);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		String jwt = tokenProvider.generateToken(authentication);
+
+		String jwt = new TokenProvider().generateToken(authentication);
 		
 		AuthResponse res = new AuthResponse(jwt, true);
 		return new ResponseEntity<AuthResponse>(res,HttpStatus.ACCEPTED);
@@ -69,7 +70,7 @@ public class AuthController {
 		Authentication authentication = authenticate(email,password);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
-		String jwt = tokenProvider.generateToken(authentication);
+		String jwt = new TokenProvider().generateToken(authentication);
 		
 		AuthResponse res = new AuthResponse(jwt, true);
 		return new ResponseEntity<AuthResponse>(res,HttpStatus.ACCEPTED);

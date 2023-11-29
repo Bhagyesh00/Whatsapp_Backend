@@ -19,7 +19,6 @@ public class UserServiceImplementation implements UserService {
 	private TokenProvider tokenProvider;
 	
 	public UserServiceImplementation() {
-		super();
 	}
 
 	public UserServiceImplementation(UserRepository userRepository,TokenProvider tokenProvider) {

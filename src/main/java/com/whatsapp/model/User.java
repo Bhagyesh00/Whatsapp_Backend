@@ -1,6 +1,9 @@
 package com.whatsapp.model;
 
+import java.util.List;
 import java.util.Objects;
+
+import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +20,7 @@ public class User {
 	private String email;
 	private String profile_picture;
 	private String password;
+	List<GrantedAuthority> authorities;
 	
 	public User() {
 		// TODO Auto-generated constructor stub
@@ -28,6 +32,12 @@ public class User {
 		this.full_name = full_name;
 		this.email = email;
 		this.profile_picture = profile_picture;
+		this.password = password;
+	}
+	
+	public User(String email,String password,List<GrantedAuthority> authorities) {
+		this.authorities = authorities;
+		this.email = email;
 		this.password = password;
 	}
 

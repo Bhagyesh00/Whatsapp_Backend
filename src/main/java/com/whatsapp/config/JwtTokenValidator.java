@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.security.core.Authentication;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -41,7 +42,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 				
 				List<GrantedAuthority> auths = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
 			 	
-				org.springframework.security.core.Authentication authentication = new UsernamePasswordAuthenticationToken(username,null, auths);
+				Authentication authentication = new UsernamePasswordAuthenticationToken(username,null, auths);
 				
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 				

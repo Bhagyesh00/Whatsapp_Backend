@@ -6,7 +6,7 @@ public class LoginRequest {
 	private String password;
 	
 	public LoginRequest(String email, String password) {
-		super();
+		
 		this.email = email;
 		this.password = password;
 	}

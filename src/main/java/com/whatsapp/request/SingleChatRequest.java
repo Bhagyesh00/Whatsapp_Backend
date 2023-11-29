@@ -9,7 +9,6 @@ public class SingleChatRequest {
 	}
 
 	public SingleChatRequest(Integer userId) {
-		super();
 		this.userId = userId;
 	}
 
